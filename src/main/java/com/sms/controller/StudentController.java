@@ -49,6 +49,14 @@ public class StudentController {
                                 Model model) {
 
         Student existingStudent = studentService.getStudentById(id);
+        existingStudent.setId(id);
+        existingStudent.setFirstName(student.getFirstName());
+        existingStudent.setLastName(student.getLastName());
+        existingStudent.setEmail(student.getEmail());
+
+        studentService.updateStudent(existingStudent);
+        return "redirect:/students";
+    }
 
     }
 }
