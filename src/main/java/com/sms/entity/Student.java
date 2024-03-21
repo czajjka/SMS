@@ -3,7 +3,7 @@ package com.sms.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name ="students")
+@Table(name = "students")
 public class Student {
 
     @Id
@@ -14,16 +14,26 @@ public class Student {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+    @Column(name = "subject")
+    private String subject;
     @Column(name = "email")
     private String email;
+    @Column(name = "behaviour")
+    private String behaviour;
+
+    @Column(name = "imageFileName")
+    private String imageFileName;
 
     public Student() {
     }
 
-    public Student(String firstName, String lastName, String email) {
+    public Student(String firstName, String lastName, String subject, String email, String behaviour, String imageFileName) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.subject = subject;
         this.email = email;
+        this.behaviour = behaviour;
+        this.imageFileName = imageFileName;
     }
 
     public Long getId() {
@@ -58,4 +68,27 @@ public class Student {
         this.email = email;
     }
 
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getBehaviour() {
+        return behaviour;
+    }
+
+    public void setBehaviour(String behaviour) {
+        this.behaviour = behaviour;
+    }
+
+    public String getImageFileName() {
+        return imageFileName;
+    }
+
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
+    }
 }
