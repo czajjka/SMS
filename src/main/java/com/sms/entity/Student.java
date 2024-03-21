@@ -1,6 +1,8 @@
 package com.sms.entity;
 
 import jakarta.persistence.*;
+import org.springframework.web.multipart.MultipartFile;
+
 
 @Entity
 @Table(name = "students")
@@ -21,13 +23,14 @@ public class Student {
     @Column(name = "behaviour")
     private String behaviour;
 
-    @Column(name = "imageFileName")
-    private String imageFileName;
+    @Lob
+    @Column(name = "imageFileName", columnDefinition = "BLOB")
+    private byte imageFileName;
 
     public Student() {
     }
 
-    public Student(String firstName, String lastName, String subject, String email, String behaviour, String imageFileName) {
+    public Student(String firstName, String lastName, String subject, String email, String behaviour, byte imageFileName) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.subject = subject;
@@ -84,11 +87,13 @@ public class Student {
         this.behaviour = behaviour;
     }
 
-    public String getImageFileName() {
+    public byte getImageFileName() {
         return imageFileName;
     }
 
-    public void setImageFileName(String imageFileName) {
+    public void setImageFileName(byte imageFileName) {
         this.imageFileName = imageFileName;
     }
 }
+
+
