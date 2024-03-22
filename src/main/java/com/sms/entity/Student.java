@@ -1,8 +1,6 @@
 package com.sms.entity;
 
 import jakarta.persistence.*;
-import org.springframework.web.multipart.MultipartFile;
-
 
 @Entity
 @Table(name = "students")
@@ -18,24 +16,21 @@ public class Student {
     private String lastName;
     @Column(name = "subject")
     private String subject;
-    @Column(name = "email")
-    private String email;
-    @Column(name = "behaviour")
-    private String behaviour;
+    @Column(name = "grade")
+    private Integer grade;
 
-    @Lob
-    @Column(name = "imageFileName", columnDefinition = "BLOB")
-    private byte imageFileName;
+    @Column(name = "imageFileName")
+    private String imageFileName;
+
 
     public Student() {
     }
 
-    public Student(String firstName, String lastName, String subject, String email, String behaviour, byte imageFileName) {
+    public Student(String firstName, String lastName, String subject, Integer grade, String imageFileName) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.subject = subject;
-        this.email = email;
-        this.behaviour = behaviour;
+        this.grade = grade;
         this.imageFileName = imageFileName;
     }
 
@@ -63,14 +58,6 @@ public class Student {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getSubject() {
         return subject;
     }
@@ -79,19 +66,19 @@ public class Student {
         this.subject = subject;
     }
 
-    public String getBehaviour() {
-        return behaviour;
+    public Integer getGrade() {
+        return grade;
     }
 
-    public void setBehaviour(String behaviour) {
-        this.behaviour = behaviour;
+    public void setGrade(Integer grade) {
+        this.grade = grade;
     }
 
-    public byte getImageFileName() {
+    public String getImageFileName() {
         return imageFileName;
     }
 
-    public void setImageFileName(byte imageFileName) {
+    public void setImageFileName(String imageFileName) {
         this.imageFileName = imageFileName;
     }
 }

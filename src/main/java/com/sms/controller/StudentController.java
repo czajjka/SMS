@@ -1,22 +1,23 @@
 package com.sms.controller;
 
-import com.sms.StudentManagementSystemApplication;
 import com.sms.entity.Student;
 import com.sms.service.StudentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+
+import java.util.List;
 
 @Controller
 public class StudentController {
+
     private StudentService studentService;
 
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
+
 
     @GetMapping("/students")
     public String listStudents(Model model) {
@@ -52,7 +53,9 @@ public class StudentController {
         existingStudent.setId(id);
         existingStudent.setFirstName(student.getFirstName());
         existingStudent.setLastName(student.getLastName());
-        existingStudent.setEmail(student.getEmail());
+        existingStudent.setSubject(student.getSubject());
+        existingStudent.setGrade(student.getGrade());
+        existingStudent.setImageFileName(student.getImageFileName());
 
         studentService.updateStudent(existingStudent);
         return "redirect:/students";

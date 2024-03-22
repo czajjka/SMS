@@ -48,8 +48,7 @@
       <th> Student First Name</th>
       <th> Student Last Name</th>
       <th> Student Subject </th>
-      <th> Student Email </th>
-      <th> Student Behaviour </th>
+      <th> Student Grade </th>
       <th> Image </th>
       <th> Actions </th>
     </tr>
@@ -60,8 +59,7 @@
       <td th:text = "${student.firstName}"></td>
       <td th:text = "${student.lastName}"></td>
       <td th:text = "${student.subject}"></td>
-      <td th:text = "${student.email}"></td>
-      <td th:text = "${student.behaviour}"></td>
+      <td th:text = "${student.grade}"></td>
       <td>
         <img th:src="@{'/images/' + ${student.imageFileName}}"
              alt="..." width="100">
