@@ -15,10 +15,12 @@ public class StudentDto {
     @NotEmpty(message = "The subject is required")
     private String subject;
 
-    @NotEmpty(message = "The grade is required")
+    @Min(0)
     private Integer grade;
 
     private MultipartFile imageFileName;
+
+
 
     public String getFirstName() {
         return firstName;

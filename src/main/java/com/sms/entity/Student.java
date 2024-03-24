@@ -1,30 +1,33 @@
 package com.sms.entity;
 
+
 import jakarta.persistence.*;
+
+import javax.validation.Valid;
+import java.util.Date;
 
 @Entity
 @Table(name = "students")
+@Valid
 public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
-    @Column(name = "first_name", nullable = false)
     private String firstName;
-    @Column(name = "last_name")
+
     private String lastName;
-    @Column(name = "subject")
+
     private String subject;
-    @Column(name = "grade")
+
     private Integer grade;
 
-    @Column(name = "imageFileName")
+    private Date createdAt;
+
     private String imageFileName;
 
-
-    public Student() {
-    }
+    public Student(){}
 
     public Student(String firstName, String lastName, String subject, Integer grade, String imageFileName) {
         this.firstName = firstName;
@@ -34,11 +37,11 @@ public class Student {
         this.imageFileName = imageFileName;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -74,6 +77,14 @@ public class Student {
         this.grade = grade;
     }
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public String getImageFileName() {
         return imageFileName;
     }
@@ -82,5 +93,4 @@ public class Student {
         this.imageFileName = imageFileName;
     }
 }
-
 
