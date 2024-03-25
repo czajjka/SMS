@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.*;
 
 
 import jakarta.validation.Valid;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.InputStream;
+import java.nio.file.*;
+import java.util.Date;
 import java.util.List;
 
 
@@ -53,38 +58,64 @@ public class StudentController {
         }
 
 
-//        // save image file
-//        MultipartFile image = studentDto.getImageFileName();
-//        String storageFileName = image.getOriginalFilename();
-//
-//        try {
-//            String uploadDir = "movieCovers/images/";
-//            Path uploadPath = Paths.get(uploadDir);
-//
-//            if (!Files.exists(uploadPath)) {
-//                Files.createDirectories(uploadPath);
-//            }
-//
-//            try (InputStream inputStream = image.getInputStream()) {
-//                Files.copy(inputStream, Paths.get(uploadDir + storageFileName),
-//                        StandardCopyOption.REPLACE_EXISTING);
-//            }
-//        } catch (Exception ex) {
-//            System.out.println("Exception: " + ex.getMessage());
-//        }
-//
-//
-//        Student student = new Student();
-//        student.setFirstName(studentDto.getFirstName());
-//        student.setLastName(studentDto.getLastName());
-//        student.setSubject(studentDto.getSubject());
-//        student.setGrade(studentDto.getGrade());
-//        student.setImageFileName(storageFileName);
-//
-//        repository.save(student);
+        // save image file
+        MultipartFile image = studentDto.getImageFileName();
+        Date createdAt = new Date();
+        String storageFileName = createdAt.getTime() + "_" + image.getOriginalFilename();
+
+        try {
+            String uploadDir = "public/images/";
+            Path uploadPath = Paths.get(uploadDir);
+
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+
+            try (InputStream inputStream = image.getInputStream()) {
+                Files.copy(inputStream, Paths.get(uploadDir + storageFileName),
+                        StandardCopyOption.REPLACE_EXISTING);
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+        }
 
 
-        return "redirect:/products";
+        Student student = new Student();
+        student.setFirstName(studentDto.getFirstName());
+        student.setLastName(studentDto.getLastName());
+        student.setSubject(studentDto.getSubject());
+        student.setGrade(studentDto.getGrade());
+        student.setCreatedAt(createdAt);
+        student.setImageFileName(storageFileName);
+
+        repository.save(student);
+
+
+        return "redirect:/students";
+    }
+
+    @GetMapping("/edit")
+    public String showEditPage(Model model,
+                               @RequestParam int id) {
+
+        try {
+            Student student = repository.findById(id).get();
+            model.addAttribute("student", student);
+
+            StudentDto studentDto = new StudentDto();
+            studentDto.setFirstName(student.getFirstName());
+            studentDto.setLastName(student.getLastName());
+            studentDto.setSubject(student.getSubject());
+            studentDto.setGrade(student.getGrade());
+
+            model.addAttribute("studentDto", studentDto);
+        }
+        catch(Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+            return "redirect:/students";
+        }
+
+        return "students/edit_student";
     }
 
 }

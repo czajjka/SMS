@@ -38,7 +38,8 @@
                 <img th:src="@{'/images/' + ${student.imageFileName}}"
                      alt="..." width="100">
             </td>
-            <td th:text="${student.createdAt.toString().substring(0, 10)}"></td>
+            <td th:text="${student.createdAt}"></td>
+
             <td style="white-space:nowrap">
                 <a class="btn btn-primary btn-sm"
                    th:href="@{/students/edit(id=${student.id})}">Edit</a>

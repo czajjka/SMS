@@ -77,5 +77,6 @@ public class Student {
     public void setImageFileName(String imageFileName) {
         this.imageFileName = imageFileName;
     }
+
 }
 
