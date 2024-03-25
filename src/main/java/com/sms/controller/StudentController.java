@@ -2,7 +2,7 @@ package com.sms.controller;
 
 import com.sms.entity.Student;
 import com.sms.entity.StudentDto;
-import com.sms.repository.StudentRepository;
+import com.sms.repositoryservice.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -10,15 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.Date;
+
+import jakarta.validation.Valid;
 import java.util.List;
 
 
@@ -61,11 +55,10 @@ public class StudentController {
 
 //        // save image file
 //        MultipartFile image = studentDto.getImageFileName();
-//        Date createdAt = new Date();
-//        String storageFileName = createdAt.getTime() + "_" + image.getOriginalFilename();
+//        String storageFileName = image.getOriginalFilename();
 //
 //        try {
-//            String uploadDir = "public/images/";
+//            String uploadDir = "movieCovers/images/";
 //            Path uploadPath = Paths.get(uploadDir);
 //
 //            if (!Files.exists(uploadPath)) {

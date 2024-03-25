@@ -3,12 +3,10 @@ package com.sms.entity;
 
 import jakarta.persistence.*;
 
-import javax.validation.Valid;
 import java.util.Date;
 
 @Entity
 @Table(name = "students")
-@Valid
 public class Student {
 
     @Id
@@ -16,26 +14,13 @@ public class Student {
     private int id;
 
     private String firstName;
-
     private String lastName;
-
     private String subject;
-
     private Integer grade;
 
+    @Column(columnDefinition = "TEXT")
     private Date createdAt;
-
     private String imageFileName;
-
-    public Student(){}
-
-    public Student(String firstName, String lastName, String subject, Integer grade, String imageFileName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.subject = subject;
-        this.grade = grade;
-        this.imageFileName = imageFileName;
-    }
 
     public int getId() {
         return id;

@@ -1,4 +1,4 @@
-package com.sms.repository;
+package com.sms.repositoryservice;
 
 import com.sms.entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;

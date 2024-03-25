@@ -1,9 +1,8 @@
 package com.sms.entity;
 
-
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 
 public class StudentDto {
     @NotEmpty(message = "The name is required")
