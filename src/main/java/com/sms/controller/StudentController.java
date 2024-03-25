@@ -118,6 +118,59 @@ public class StudentController {
         return "students/edit_student";
     }
 
+    @PostMapping("/edit")
+    public String updateStudent(Model model,
+                                @RequestParam int id,
+                                @Valid @ModelAttribute StudentDto studentDto,
+                                BindingResult result) {
+
+        try {
+            Student student = repository.findById(id).get();
+            model.addAttribute("student", student);
+
+            if (result.hasErrors()) {
+                return "students/edit_student";
+            }
+
+            if (!studentDto.getImageFileName().isEmpty()) {
+                // delete old image
+                String uploadDir = "public/images/";
+                Path oldImagePath = Paths.get(uploadDir + student.getImageFileName());
+
+                try {
+                    Files.delete(oldImagePath);
+                }
+                catch(Exception ex) {
+                    System.out.println("Exception: " + ex.getMessage());
+                }
+
+                // save new image file
+                MultipartFile image = studentDto.getImageFileName();
+                Date createdAt = new Date();
+                String storageFileName = createdAt.getTime() + "_" + image.getOriginalFilename();
+
+                try (InputStream inputStream = image.getInputStream()) {
+                    Files.copy(inputStream, Paths.get(uploadDir + storageFileName),
+                            StandardCopyOption.REPLACE_EXISTING);
+                }
+
+                student.setImageFileName(storageFileName);
+            }
+
+            student.setFirstName(studentDto.getFirstName());
+            student.setLastName(studentDto.getLastName());
+            student.setSubject(studentDto.getSubject());
+            student.setGrade(studentDto.getGrade());
+
+            repository.save(student);
+        }
+        catch(Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+        }
+
+        return "redirect:/students";
+    }
+
 }
 
 
