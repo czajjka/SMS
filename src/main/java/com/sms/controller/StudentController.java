@@ -109,8 +109,7 @@ public class StudentController {
             studentDto.setGrade(student.getGrade());
 
             model.addAttribute("studentDto", studentDto);
-        }
-        catch(Exception ex) {
+        } catch (Exception ex) {
             System.out.println("Exception: " + ex.getMessage());
             return "redirect:/students";
         }
@@ -139,8 +138,7 @@ public class StudentController {
 
                 try {
                     Files.delete(oldImagePath);
-                }
-                catch(Exception ex) {
+                } catch (Exception ex) {
                     System.out.println("Exception: " + ex.getMessage());
                 }
 
@@ -163,14 +161,40 @@ public class StudentController {
             student.setGrade(studentDto.getGrade());
 
             repository.save(student);
-        }
-        catch(Exception ex) {
+        } catch (Exception ex) {
             System.out.println("Exception: " + ex.getMessage());
         }
 
         return "redirect:/students";
     }
 
+    @GetMapping("/delete")
+    public String deleteStudent(
+            @RequestParam int id
+    ) {
+
+        try {
+            Student student = repository.findById(id).get();
+
+
+            // delete student image
+            Path imagePath = Paths.get("public/images/" + student.getImageFileName());
+
+            try {
+                Files.delete(imagePath);
+            } catch (Exception ex) {
+                System.out.println("Exception: " + ex.getMessage());
+            }
+
+
+            // delete the product
+            repository.delete(student);
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+        }
+
+        return "redirect:/students";
+
+    }
+
 }
-
-
