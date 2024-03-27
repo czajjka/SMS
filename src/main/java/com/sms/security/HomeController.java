@@ -2,6 +2,7 @@ package com.sms.security;
 
 import com.sms.security.model.UserDtls;
 import com.sms.security.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,19 +31,22 @@ public class HomeController {
     }
 
     @PostMapping("/createUser")
-    public String createUser(@ModelAttribute UserDtls user){
+    public String createUser(@ModelAttribute UserDtls user, HttpSession session) {
+        boolean a = userService.checkEmail(user.getEmail());
 
-//        System.out.println(user);
-        UserDtls userDtls=userService.createUser(user);
-        if(userDtls!=null){
-            System.out.println("Register Sucessfully");
-        } else {
-            System.out.println("Error in server");
+        if (a) {
+            session.setAttribute("msg", "Email Id already exists");
         }
+        else {
+            UserDtls userDtls = userService.createUser(user);
+            if (userDtls != null) {
+                session.setAttribute("msg", "Register Sucessfuly");
+            } else {
+                session.setAttribute("msg", "Error in server");
+            }
+        }
+            return "redirect:/register";
 
-        return "redirect:/students/security/register";
-
-    }
-
+        }
 
 }
